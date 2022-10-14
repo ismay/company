@@ -6,16 +6,10 @@ export default function Footer() {
       <a className={s.link} href="mailto:ismay@wolffsoftwareengineering.nl">
         Email
       </a>
-      <a className={s.link} href="https://scholar.social/@ismay" rel="me">
-        Mastodon
-      </a>
       <a className={s.link} href="https://github.com/ismay">
         Github
       </a>
-      <a
-        className={s.link}
-        href="https://www.linkedin.com/in/wolffsoftwareengineering"
-      >
+      <a className={s.link} href="https://www.linkedin.com/in/w%D0%BElff/">
         Linkedin
       </a>
       <span>

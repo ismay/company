@@ -1,44 +1,22 @@
-name: Lighthouse
+name: lighthouse
 
-on: [push]
+on: [deployment_status]
 
 concurrency:
   group: ${{ github.workflow}}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  vercel:
-    if: github.repository_owner == 'ismay'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    outputs:
-      url: https://${{ steps.url.outputs.preview_url }}
-    steps:
-      - uses: zentered/vercel-preview-url@v1.0.4
-        id: url
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          vercel_team_id: ismaywolff
-          vercel_project_id: wolffsoftwareengineering
-      - uses: unlyed/github-action-await-vercel@v1.2.14
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          deployment-url: ${{ steps.url.outputs.preview_url }}
-          timeout: 600
-
   lighthouse:
-    needs: ["vercel"]
-    if: github.repository_owner == 'ismay'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v2
-      - uses: treosh/lighthouse-ci-action@8.0.0
+      - uses: actions/checkout@v3
+      - uses: treosh/lighthouse-ci-action@9.3.0
         with:
-          urls: ${{ needs.vercel.outputs.url }}
-          budgetPath: ".github/budget.json"
+          urls: ${{ github.event.deployment_status.target_url }}
           temporaryPublicStorage: true
+          runs: 3
         env:
           LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

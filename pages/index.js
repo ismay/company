@@ -6,9 +6,6 @@ import { serialize } from "next-mdx-remote/serialize";
 import Head from "next/head";
 import T from "prop-types";
 import client from "../client";
-import Portrait from "../components/portrait";
-
-const components = { Portrait };
 
 export default function Home({ source }) {
   return (
@@ -20,7 +17,7 @@ export default function Home({ source }) {
           name="description"
         />
       </Head>
-      <MDXRemote {...source} components={components} />
+      <MDXRemote {...source} />
     </>
   );
 }

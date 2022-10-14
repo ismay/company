@@ -11,55 +11,55 @@
     "prepare": "husky install",
     "storybook:build": "build-storybook",
     "storybook:start": "start-storybook -p 6006 --quiet",
-    "pretest:e2e": "NODE_ENV=test npm run dev & wait-on -s 1 http://localhost:3000",
-    "test:e2e": "cypress open --config-file .cypress/cypress.json",
+    "pretest:e2e": "npm run dev & wait-on -s 1 http://localhost:3000",
+    "test:e2e": "cypress open --e2e --config-file .cypress/cypress.config.js",
     "posttest:e2e": "kill-port 3000"
   },
   "dependencies": {
-    "graphql-request": "3.6.0",
-    "next": "12.0.0",
-    "next-mdx-remote": "3.0.6",
+    "@panelbear/panelbear-nextjs": "1.0.4",
+    "graphql": "16.6.0",
+    "graphql-request": "5.0.0",
+    "next": "12.3.1",
+    "next-mdx-remote": "4.1.0",
     "prop-types": "15.7.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@percy/cli": "1.0.0-beta.69",
+    "@next/eslint-plugin-next": "12.3.1",
+    "@percy/cli": "1.10.4",
     "@percy/cypress": "3.1.1",
-    "@storybook/addon-essentials": "6.3.11",
-    "@storybook/addon-links": "6.3.11",
-    "@storybook/builder-webpack5": "6.3.11",
-    "@storybook/manager-webpack5": "6.3.11",
-    "@storybook/react": "6.3.11",
-    "@testing-library/cypress": "8.0.1",
-    "axe-core": "4.3.3",
-    "cypress": "8.6.0",
-    "cypress-axe": "0.13.0",
-    "eslint": "7.32.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-next": "12.0.0",
-    "eslint-config-prettier": "8.3.0",
+    "@storybook/addon-essentials": "6.5.12",
+    "@storybook/addon-links": "6.5.12",
+    "@storybook/builder-webpack5": "6.5.12",
+    "@storybook/manager-webpack5": "6.5.12",
+    "@storybook/react": "6.5.12",
+    "@testing-library/cypress": "8.0.3",
+    "cypress": "10.9.0",
+    "eslint": "8.24.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-cypress": "2.12.1",
-    "eslint-plugin-import": "2.25.2",
-    "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-react": "7.26.1",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-sort": "1.5.0",
-    "graphql": "15.6.1",
-    "husky": "7.0.2",
-    "kill-port": "1.6.1",
-    "lint-staged": "11.2.3",
-    "msw": "0.35.0",
-    "prettier": "2.4.1",
-    "stylelint": "13.13.1",
-    "stylelint-config-prettier": "8.0.2",
-    "stylelint-config-standard": "22.0.0",
-    "stylelint-order": "4.1.0",
-    "wait-on": "6.0.0"
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.6.1",
+    "eslint-plugin-react": "7.31.8",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-sort": "2.4.0",
+    "husky": "8.0.1",
+    "kill-port": "2.0.1",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1",
+    "stylelint": "14.13.0",
+    "stylelint-config-prettier": "9.0.3",
+    "stylelint-config-standard": "28.0.0",
+    "stylelint-order": "5.0.0",
+    "wait-on": "6.0.1"
   },
   "renovate": {
     "extends": [
-      "config:base"
+      "config:js-app",
+      ":dependencyDashboardApproval",
+      ":enableVulnerabilityAlerts"
     ]
   },
   "browserslist": [
@@ -79,11 +79,11 @@
   },
   "eslintConfig": {
     "extends": [
-      "next",
       "airbnb",
       "airbnb/hooks",
       "plugin:sort/recommended",
       "plugin:cypress/recommended",
+      "plugin:@next/next/recommended",
       "prettier"
     ],
     "rules": {
@@ -132,11 +132,12 @@
           "shorthandFirst": true,
           "callbacksLast": true
         }
-      ]
+      ],
+      "sort/exports": "off",
+      "no-html-link-for-pages": "off"
     },
     "ignorePatterns": [
       "!.cypress/",
-      "!.msw/",
       "!.storybook/"
     ],
     "overrides": [
@@ -154,7 +155,8 @@
           ],
           "react/no-multi-comp": "off",
           "react/jsx-props-no-spreading": "off",
-          "import/no-extraneous-dependencies": "off"
+          "import/no-extraneous-dependencies": "off",
+          "@next/next/no-img-element": "off"
         }
       },
       {
@@ -164,16 +166,6 @@
         "rules": {
           "no-param-reassign": "off",
           "import/prefer-default-export": "off"
-        }
-      },
-      {
-        "files": [
-          ".msw/**/*.js"
-        ],
-        "rules": {
-          "import/no-extraneous-dependencies": "off",
-          "import/prefer-default-export": "off",
-          "global-require": "off"
         }
       },
       {
