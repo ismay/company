@@ -9,7 +9,7 @@ export default function Footer() {
       <a className={s.link} href="https://github.com/ismay">
         Github
       </a>
-      <a className={s.link} href="https://www.linkedin.com/in/w%D0%BElff/">
+      <a className={s.link} href="https://www.linkedin.com/in/ismaywolff/">
         Linkedin
       </a>
       <span>
